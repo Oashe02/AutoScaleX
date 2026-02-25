@@ -1,10 +1,11 @@
 # Class Diagram
 
-This diagram visualizes the **Object-Oriented Architecture** of the Prediction & Scaling Engine. It leverages design patterns to ensure the system is extensible and maintainable in a production environment:
+This diagram visualizes the **Object-Oriented Architecture** of the Smart Parking Space Allocation System. It leverages design patterns to ensure the system is scalable, maintainable, and adaptable for real-world parking environments:
 
-*   **Strategy Pattern:** Allows hot-swapping of predictive algorithms (e.g., `LinearRegression` vs. `MovingAverage`) without altering core logic.
-*   **Observer Pattern:** Enables the `PredictionEngine` to react continuously to incoming `Metric` streams in real-time.
-*   **Factory/Interface:** Decouples the `ScalingExecutor` from specific infrastructure implementations, making it easier to support multiple cloud providers.
+*   **Strategy Pattern:** Allows dynamic switching between different prediction algorithms (e.g., `MovingAveragePrediction` vs. `TrendBasedPrediction`) without modifying the core `PredictionEngine`.
+*   **Observer Pattern:** Enables the `DecisionEngine` to react in real-time to updates from the `OccupancyTracker`, triggering allocation or redirection when occupancy thresholds change.
+*   **Factory Pattern:** Decouples the `AllocationEngine` from specific allocation strategies (e.g., `NormalAllocation`, `PeakHourAllocation`, `PriorityAllocation`), allowing flexible slot assignment based on demand conditions.
+*   **Singleton Pattern:** Ensures a centralized `EventDispatcher` manages system-wide events such as occupancy updates, prediction triggers, and allocation decisions.
 
 *   **3-Tier Architecture:** Explicit separation between **API Controllers** (Request handling), **Business Services** (Logic orchestration), and **Data Models** (Database schemas).
 *   **Strategy Pattern:** The `AllocationService` leverages the Strategy Pattern to switch between `NormalAllocation` and `PeakHourAllocation` logic dynamically based on system demand.

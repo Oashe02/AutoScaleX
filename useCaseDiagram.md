@@ -1,10 +1,10 @@
 # Use Case Diagram
 
-This diagram outlines the **Functional Requirements** and key interactions for the AutoScaleX platform. It categorizes system capabilities by actor to ensure all stakeholder needs are met:
+This diagram outlines the **Functional Requirements** and key interactions for the Smart Parking Space Allocation System. It categorizes system capabilities by actor to ensure efficient parking management and optimal user experience:
 
-*   **System Admin:** Manages the platform infrastructure, global configurations, and tenant onboarding.
-*   **Tenant User:** Configures specific scaling policies for their services and views performance dashboards.
-*   **System Scheduler:** Background processes that drive the automated prediction and resource optimization cycles.
+*   **Parking Admin:** Manages parking infrastructure, configures parking zones, defines allocation rules, and monitors real-time occupancy and system performance.
+*   **Driver (End User):** Requests parking slots, views availability, and receives slot allocation or redirection based on current demand and system decisions.
+*   **System Scheduler:** Background processes that continuously collect occupancy data, trigger prediction cycles, and execute automated allocation or redirection actions.
 
 *   **End User:** Interacts with the platform to manage their profile, browse facilities, and execute the full booking-to-invoice lifecycle.
 *   **System Admin:** Possesses elevated privileges to manage physical infrastructure, configure pricing rules, and access system-wide analytics.

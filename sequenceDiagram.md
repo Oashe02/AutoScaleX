@@ -1,10 +1,10 @@
 # Sequence Diagram
 
-This flow illustrates the **Predictive Auto-Scaling Loop**, detailing how the system transitions from monitoring to action. It highlights the asynchronous nature of the analysis pipeline to prevent blocking critical operations:
+This flow illustrates the **Smart Parking Allocation Loop**, detailing how the system transitions from real-time occupancy tracking to predictive decision-making and slot allocation. It highlights the event-driven nature of the pipeline to ensure responsive and efficient parking management:
 
-1.  **Ingestion:** The `Monitoring Agent` continuously pushes resource metrics to the `TimeSeries API`.
-2.  **Analysis:** The `Prediction Engine` processes historical data to forecast future load trends.
-3.  **Execution:** If a threshold is breached, the `Executor` triggers a scale-out/in event and logs the action for auditability.
+1.  **Ingestion:** The `Occupancy Tracker` continuously receives updates (slot occupied/free) and pushes parking metrics to the system.
+2.  **Analysis:** The `Prediction Engine` processes historical occupancy data to forecast future parking demand and detect potential peak conditions.
+3.  **Execution:** If predicted occupancy crosses defined thresholds, the `Decision Engine` triggers the `Allocation Engine` to reserve slots, restrict access, or redirect incoming vehicles. All actions are logged for auditability and monitoring.
 
 1.  **Security & Authentication:** Every request is intercepted by the **JWT Middleware** to verify identity and role permissions before reaching the controllers.
 2.  **Intelligent Allocation:** The **Booking Service** delegates slot selection to the **Allocation Engine**, which runs complex logic to find the optimal space in real-time.
