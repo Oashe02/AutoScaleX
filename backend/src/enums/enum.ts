@@ -40,3 +40,8 @@ export enum reservationstatus {
     expired = "expired",
     cancelled = "cancelled",
 }
+
+export enum userrole {
+    user = "user",
+    admin = "admin"
+}
