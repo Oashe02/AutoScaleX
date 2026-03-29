@@ -1,14 +1,24 @@
-import authenticate from "../services/auth"
+import authservice from "../services/auth"
 
-const authservice = new authenticate()
+const auth = new authservice()
 
 export const register = async (req:any,res:any)=>{
     try {
-        const {name,password} = req.body
-        const user = await authservice.register(name,password)
-        return res.status(201).json({message:"user register ho gaya",user})
-    } catch (error) {
-        console.log(error)
-        return res.status(500).json({message:"Internal server error"})
+        const {name,email,phone,password,vehicleNumber} = req.body
+        const user = await auth.register(name,email,phone,password,vehicleNumber)
+        return res.status(201).json({message:"registered",user})
+    } catch (err:any) {
+        console.log(err)
+        return res.status(500).json({message:err.message})
+    }
+}
+export const login = async(req:any,res:any)=>{
+    try{
+        const {email,password} = req.body
+        const data = await auth.login(email,password)
+        return res.status(200).json({message:"logged in",data})
+    }catch(err:any){
+        console.log(err)
+        return res.status(401).json({message:err.message})
     }
 }
