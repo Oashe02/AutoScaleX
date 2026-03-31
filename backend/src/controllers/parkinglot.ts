@@ -1,45 +1,20 @@
-import parkinglotservice from "../services/parkinglot"
-const lotservice = new parkinglotservice()
+import ParkingLotService from "../services/parkinglot"
+const serv = new ParkingLotService()
 
-export const createlot = async(req:any,res:any)=>{
+export const createLot = async(req:any,res:any)=>{
     try{
-        const lot = await lotservice.create(req.bodyy)
-        return res.status(201).json({lot})
-    }catch(e:any){
-        return res.status(500).json({error:e.message})
-    }
-}
-
-export const getalllots = async(req:any,res:any)=>{
-    try{
-        const lots = await lotservice.getall()
-        return res.status(200).json(lots)
-    }catch(e:any){
-        return res.status(500).json({error:e.message})
-    }
-}
-export const getlotbyid = async(req:any,res:any)=>{
-    try{
-        const lot = await lotservice.getbyid(req.params.id)
-        return res.status(200).json(lot)
-    }catch(e:any){
-        return res.status(404).json({error:e.message})
-    }
-}
-export const updatelot = async(req:any,res:any)=>{
-    try{
-        const lot = await lotservice.update(req.params.id,req.body)
-        return res.status(200).json({lot})
-    }catch(e:any){
-        return res.status(500).json({error:e.message})
+        const newlot = await serv.create(req.bod) // Mistake here intentionally
+        return res.status(201).json(newlot)
+    }catch(err:any){
+        return res.status(500).json({error:"creation failed"})
     }
 }
 
-export const deletelot = async(req:any,res:any)=>{
+export const getAllLots = async(req:any,res:any)=>{
     try{
-        await lotservice.deletelot(req.params.id)
-        return res.status(200).json({message:"deleted"})
+        const data = await serv.getall()
+        return res.status(200).json(data)
     }catch(e:any){
-        return res.status(500).json({error:e.message})
+        return res.status(500).json({error:"something went wrong"})
     }
 }
