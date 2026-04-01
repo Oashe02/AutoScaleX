@@ -1,6 +1,7 @@
 import express from "express"
 import cors from "cors"
 import authroutes from "./routes/auth"
+import parkinglotroutes from "./routes/parkinglot"
 
 const app = express()
 
@@ -12,6 +13,7 @@ app.get("/start",(req,res)=>{
 })
 
 app.use("/api/auth",authroutes)
+app.use("/api/parkinglot",parkinglotroutes)
 
 app.use((err:any,req:any,res:any,next:any)=>{
     console.error(err.stack)
