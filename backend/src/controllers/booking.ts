@@ -3,10 +3,13 @@ const svc = new BookingService()
 
 export const createNewBooking = async(req:any,res:any)=>{
     try{
+        if(!req.body.slotId) {
+            return res.status(400).json({error:"slotId is required"})
+        }
         const b = await svc.create(req.user.id,req.body.slotId)
         return res.status(201).json(b)
     }catch(err:any){
-        return res.status(400).json({error:"booking failed"})
+        return res.status(400).json({error:"booking failed: " + err.message})
     }
 }
 
