@@ -6,10 +6,12 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+  const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
+
   const fetchLots = async () => {
     try {
       setLoading(true);
-      const res = await fetch('http://localhost:3000/api/parkinglot');
+      const res = await fetch(`${API_URL}/parkinglot`);
       if (!res.ok) throw new Error("Failed to fetch");
       const data = await res.json();
       setLots(data);
@@ -22,7 +24,7 @@ function App() {
 
   const createSampleLot = async () => {
     try {
-      const res = await fetch('http://localhost:3000/api/parkinglot', {
+      const res = await fetch(`${API_URL}/parkinglot`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
