@@ -4,6 +4,8 @@ import authroutes from "./routes/auth"
 import parkinglotroutes from "./routes/parkinglot"
 import slotroutes from "./routes/slot"
 import bookingroutes from "./routes/booking"
+import reservationroutes from "./routes/reservation"
+import paymentroutes from "./routes/payment"
 
 const app = express()
 
@@ -18,6 +20,8 @@ app.use("/api/auth",authroutes)
 app.use("/api/parkinglot",parkinglotroutes)
 app.use("/api/slot",slotroutes)
 app.use("/api/booking",bookingroutes)
+app.use("/api/reservation",reservationroutes)
+app.use("/api/payment",paymentroutes)
 
 app.use((err:any,req:any,res:any,next:any)=>{
     console.error(err.stack)
