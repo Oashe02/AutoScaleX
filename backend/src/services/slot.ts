@@ -1,5 +1,6 @@
 import Slot from "../models/slot"
 import Parkinglot from "../models/parkinglot"
+import { Slotstatus } from "../enums/enum"
 
 class slotservice {
     async create(data:any){
@@ -11,7 +12,7 @@ class slotservice {
         return await Slot.find({parkingLotId:lotid})
     }
     async getavailable(lotid:string){
-        return await Slot.find({parkingLotId:lotid,status:"available"})
+        return await Slot.find({parkingLotId:lotid,status:Slotstatus.available})
     }
     async getbyid(id:string){
         const slt = await Slot.findById(id)

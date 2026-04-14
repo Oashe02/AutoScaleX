@@ -13,7 +13,7 @@ class bookingservice {
             userId:userid,
             slotId:slotid,
             startTime:new Date(),
-            status:"active"
+            status:Bookingstatus.active
         })
         return bk
     }
@@ -21,7 +21,7 @@ class bookingservice {
         const bk = await Booking.findById(id)
         if(!bk) throw new Error("not found")
         bk.endTime = new Date()
-        bk.status = "completed"
+        bk.status = Bookingstatus.completed
         await bk.save()
         await Slot.findByIdAndUpdate(bk.slotId,{status:"available"})
         return bk
@@ -29,7 +29,7 @@ class bookingservice {
     async cancel(id:string){
         const bk = await Booking.findById(id)
         if(!bk) throw new Error("not found")
-        bk.status = "cancelled"
+        bk.status = Bookingstatus.cancelled
         await bk.save()
         await Slot.findByIdAndUpdate(bk.slotId,{status:"available"})
         return bk
@@ -42,7 +42,7 @@ class bookingservice {
         return await Booking.findById(id).populate("slotId")
     }
     async getactive(){
-        return await Booking.find({status:"active"}).populate("slotId")
+        return await Booking.find({status:Bookingstatus.active}).populate("slotId")
     }
 }
 

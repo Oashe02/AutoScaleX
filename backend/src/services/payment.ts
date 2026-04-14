@@ -1,5 +1,6 @@
 import Payment from "../models/payment"
 import Invoice from "../models/invoice"
+import { paymentstatus, invoicestatus } from "../enums/enum"
 
 class paymentservice {
     async processpayment(invId:string,amt:number,method:string){
@@ -10,14 +11,14 @@ class paymentservice {
             invoiceId:invId,
             amount:amt,
             method:method,
-            status:"pending"
+            status:paymentstatus.pending
         })
         
-        pmt.status = "paid"
+        pmt.status = paymentstatus.paid
         pmt.transactionId = "TXN_" + Date.now()
         await pmt.save()
 
-        await Invoice.findByIdAndUpdate(invId,{status:"paid"})
+        await Invoice.findByIdAndUpdate(invId,{status:invoicestatus.paid})
         return pmt
     }
     async getbyinvoice(invId:string){
@@ -29,7 +30,7 @@ class paymentservice {
     async refund(id:string){
         const pmt = await Payment.findById(id)
         if(!pmt) throw new Error("not found")
-        pmt.status = "refunded"
+        pmt.status = paymentstatus.refunded
         await pmt.save()
         return pmt
     }
