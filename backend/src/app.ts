@@ -6,6 +6,8 @@ import slotroutes from "./routes/slot"
 import bookingroutes from "./routes/booking"
 import reservationroutes from "./routes/reservation"
 import paymentroutes from "./routes/payment"
+import invoiceroutes from "./routes/invoice"
+import allocationroutes from "./routes/allocation"
 
 const app = express()
 
@@ -22,6 +24,8 @@ app.use("/api/slot",slotroutes)
 app.use("/api/booking",bookingroutes)
 app.use("/api/reservation",reservationroutes)
 app.use("/api/payment",paymentroutes)
+app.use("/api/invoice",invoiceroutes)
+app.use("/api/allocation",allocationroutes)
 
 app.use((err:any,req:any,res:any,next:any)=>{
     console.error(err.stack)
