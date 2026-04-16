@@ -16,6 +16,24 @@ export const fetchMyRes = async(req:any,res:any)=>{
         const rs = await resServ.getuserreservations(req.user.id)
         return res.status(200).json(rs)
     }catch(err:any){
-        return res.status(500).json({error:"fetch error map"})
+        return res.status(500).json({error:"fetch error"})
+    }
+}
+
+export const cancelRes = async(req:any,res:any)=>{
+    try{
+        const rs = await resServ.cancel(req.params.id)
+        return res.status(200).json(rs)
+    }catch(err:any){
+        return res.status(500).json({error:"err deleting res"})
+    }
+}
+
+export const activeRes = async(req:any,res:any)=>{
+    try{
+        const act = await resServ.getactive()
+        return res.status(200).json(act)
+    }catch(e:any){
+        return res.status(500).json({error:"could not fetch active"})
     }
 }
