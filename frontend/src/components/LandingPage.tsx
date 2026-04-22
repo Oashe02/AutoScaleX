@@ -1,13 +1,19 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import { AuthPopup } from './authPopup'
+import { useParking } from '../hooks/useParking'
 
 export const LandingPage = () => {
   const { login } = useAuth()
+  const { data, fetchLots } = useParking()
   const navigate = useNavigate()
   const [showAuth, setShowAuth] = useState(false)
   
+  useEffect(() => {
+    fetchLots()
+  }, [fetchLots])
+
   const handleLogin = (token: string) => {
     login(token)
     navigate('/')
@@ -50,27 +56,41 @@ export const LandingPage = () => {
           </button>
         </div>
         
-        <div className="mt-20 lg:mt-28 w-full max-w-4xl border border-slate-200/80 rounded-t-3xl bg-white shadow-2xl shadow-slate-200/40 h-72 sm:h-96 overflow-hidden relative">
+        <div className="mt-20 lg:mt-28 w-full max-w-4xl border border-slate-200/80 rounded-t-3xl bg-white shadow-2xl shadow-slate-200/40 min-h-72 sm:min-h-96 overflow-hidden relative">
            <div className="absolute top-0 inset-x-0 h-12 border-b border-slate-100 flex items-center px-6 gap-2 bg-slate-50/80 backdrop-blur-sm">
              <div className="w-3 h-3 rounded-full bg-slate-200"></div>
              <div className="w-3 h-3 rounded-full bg-slate-200"></div>
              <div className="w-3 h-3 rounded-full bg-slate-200"></div>
+             <span className="text-[10px] font-bold text-slate-400 ml-2 tracking-widest uppercase">Live Facilities</span>
            </div>
-           <div className="pt-20 px-8 grid grid-cols-1 sm:grid-cols-3 gap-6">
-               <div className="h-40 rounded-2xl border border-slate-100 bg-slate-50/50 shadow-sm p-5 flex flex-col justify-between">
-                  <div className="w-1/2 h-2 bg-slate-200 rounded-full"></div>
-                  <div className="w-full h-8 bg-white rounded-lg border border-slate-100 mt-auto"></div>
-               </div>
-               <div className="h-40 rounded-2xl border border-slate-100 bg-slate-50/50 shadow-sm p-5 flex flex-col justify-between hidden sm:flex">
-                  <div className="w-2/3 h-2 bg-slate-200 rounded-full"></div>
-                  <div className="w-full h-8 bg-white rounded-lg border border-slate-100 mt-auto"></div>
-               </div>
-               <div className="h-40 rounded-2xl border border-slate-100 bg-slate-50/50 shadow-sm p-5 flex flex-col justify-between hidden sm:flex">
-                  <div className="w-1/3 h-2 bg-emerald-200 rounded-full"></div>
-                  <div className="w-full h-8 bg-white rounded-lg border border-slate-100 mt-auto"></div>
-               </div>
+           <div className="pt-20 px-8 grid grid-cols-1 sm:grid-cols-3 gap-6 pb-20">
+               {data.lots.length > 0 ? (
+                 data.lots.slice(0, 3).map((lot: any) => (
+                   <div key={lot._id} className="h-40 rounded-2xl border border-slate-100 bg-slate-50/50 shadow-sm p-5 flex flex-col group hover:border-emerald-200 hover:bg-emerald-50/30 transition-all">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="px-2 py-0.5 rounded-md bg-white border border-slate-100 text-[9px] font-bold text-slate-500 uppercase tracking-tighter">Facility</div>
+                        <div className="w-2 h-2 rounded-full bg-emerald-400"></div>
+                      </div>
+                      <h3 className="text-sm font-bold text-slate-900 group-hover:text-emerald-700 transition-colors">{lot.name}</h3>
+                      <p className="text-[11px] font-medium text-slate-500 line-clamp-1">{lot.location}</p>
+                      <div className="mt-auto pt-3 flex items-center justify-between">
+                         <span className="text-[10px] font-black text-slate-400">{lot.totalSlots} Slots</span>
+                         <div className="w-6 h-6 rounded-lg bg-white border border-slate-100 flex items-center justify-center">
+                            <svg className="w-3 h-3 text-slate-400 group-hover:text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M9 5l7 7-7 7"></path></svg>
+                         </div>
+                      </div>
+                   </div>
+                 ))
+               ) : (
+                 [1, 2, 3].map((i) => (
+                   <div key={i} className="h-40 rounded-2xl border border-slate-100 bg-slate-50/50 shadow-sm p-5 flex flex-col justify-between animate-pulse">
+                      <div className="w-1/2 h-2 bg-slate-200 rounded-full"></div>
+                      <div className="w-full h-8 bg-white rounded-lg border border-slate-100 mt-auto"></div>
+                   </div>
+                 ))
+               )}
            </div>
-           <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-white via-white/80 to-transparent"></div>
+           <div className="absolute bottom-0 inset-x-0 h-20 bg-gradient-to-t from-white via-white/80 to-transparent"></div>
         </div>
       </main>
       

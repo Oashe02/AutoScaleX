@@ -20,8 +20,19 @@ class slotservice {
         return slt
     }
     async updatestatus(id:string,status:string){
-        const slt = await Slot.findByIdAndUpdate(id,{status},{new:true})
-        if(!slt) throw new Error("not found")
+        const oldSlot = await Slot.findById(id);
+        if(!oldSlot) throw new Error("not found");
+        
+        const oldStatus = (oldSlot as any).status;
+        const slt = await Slot.findByIdAndUpdate(id,{status},{new:true});
+        
+        // Update availableSlots count in Parkinglot
+        if (oldStatus === Slotstatus.available && status !== Slotstatus.available) {
+            await Parkinglot.findByIdAndUpdate((oldSlot as any).parkingLotId, { $inc: { availableSlots: -1 } });
+        } else if (oldStatus !== Slotstatus.available && status === Slotstatus.available) {
+            await Parkinglot.findByIdAndUpdate((oldSlot as any).parkingLotId, { $inc: { availableSlots: 1 } });
+        }
+        
         return slt
     }
 
