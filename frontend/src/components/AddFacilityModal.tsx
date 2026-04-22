@@ -34,8 +34,8 @@ export const AddFacilityModal = ({ onClose, onAdd }: any) => {
             <input required type="text" value={location} onChange={e => setLocation(e.target.value)} placeholder="e.g. 5th Avenue, NY" className={inputClass} />
           </div>
         <div>
-            <label className="text-xs font-bold text-slate-500 uppercase tracking-wide block mb-2">TotalCpacity (Spots)</label>
-        <input required min="5" max="250" type="number" value={total} onChange={e => setTotal(aseInt(e.target.value))} className={inputClass} />
+            <label className="text-xs font-bold text-slate-500 uppercase tracking-wide block mb-2">Total Capacity (Spots)</label>
+        <input required min="5" max="250" type="number" value={total} onChange={e => setTotal(parseInt(e.target.value))} className={inputClass} />
           </div>
 
           <button type="submit" className="mt-2 w-full py-4 rounded-xl bg-slate-900 text-white font-bold tracking-wide hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/10 cursor-pointer">
