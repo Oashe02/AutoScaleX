@@ -3,8 +3,8 @@ import dotenv from "dotenv"
 dotenv.config()
 
 const authmiddleware = (req: any, res: any, next: any) => {
+  const secret = process.env.JWT || ""
   try {
-    const secret = process.env.JWT || ""
     const header = req.header('authorization')
     if (!header || !header.startsWith('Bearer ')) {
       return res.status(401).json({ error: 'no token' })
