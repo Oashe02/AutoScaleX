@@ -26,13 +26,13 @@ export const AuthPopup=({ closePopup,setLoggedIn}:any)=>{
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
       })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.message || data.error || 'Authentication failed')
-      const token = data?.data?.tkn || data?.token
-      if (token) {
-        localStorage.setItem('token', token)
-        setLoggedIn(true)
+      const json = await res.json()
+      if (res.ok && json.data?.tkn) {
+        localStorage.setItem('token', json.data.tkn)
+        setLoggedIn(json.data.tkn)
         closePopup()
+      } else if (!res.ok) {
+        setErr(json.error || json.message || 'Auth failed')
       } else if (!isLogin) {
         setIsLogin(true)
         setErr('Account created successfully. Please sign in.')

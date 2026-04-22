@@ -22,7 +22,10 @@ const Home = () => {
   const { showAdd, setShowAdd, create } = useFacilities(refresh)
 
   useEffect(() => {
-    refresh()
+    const timer = setTimeout(() => {
+      refresh()
+    }, 100)
+    return () => clearTimeout(timer)
   }, [loggedIn])
 
   const stats = {

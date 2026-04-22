@@ -50,6 +50,12 @@ export const useBooking = (refreshCallback: () => void) => {
         body: JSON.stringify({ slotId: state.pendingSlot._id })
       })
       
+      if (bRes.status === 401) {
+        localStorage.removeItem('token')
+        window.location.href = '/landing'
+        return
+      }
+      
       if (!bRes.ok) {
         const err = await bRes.json()
         throw new Error(err.error || 'Booking creation failed')
@@ -74,7 +80,7 @@ export const useBooking = (refreshCallback: () => void) => {
       setState(s => ({ ...s, paymentOpen: false, pendingSlot: null }))
       refreshCallback()
     } catch (e: any) {
-      alert(`Error: ${e.message || 'Something went wrong'}`)
+      console.error(e.message || 'Something went wrong')
     }
   }
 

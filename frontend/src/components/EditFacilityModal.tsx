@@ -8,9 +8,7 @@ export const EditFacilityModal = ({ lot, onClose, onUpdate, onDelete }: any) => 
     onUpdate(lot._id, { name, location,total })
   }
   const handleDelete = () => {
-    if (confirm("u really want to dellete")) {
-      onDelete(lot._id)
-    }
+    onDelete(lot._id)
   }
   const inputClass = "w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm font-medium outline-none focus:border-amber-400 focus:ring-4 focus:ring-amber-400/20 transition-all placeholder:text-slate-400"
   return (

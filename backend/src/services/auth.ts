@@ -13,8 +13,10 @@ class authservice {
             throw new Error("already exists")
         }
         const hashed = await bcrypt.hash(pass,10)
-        const newuser = await User.create({name,email,phone,password:hashed,vehicleNumber})
-        return newuser
+        const newuser = await User.create({ name,email,phone,password:hashed, vehicleNumber })
+        const jwtsecret = process.env.JWT || 'secrethain'
+        const token = jwt.sign({ id: newuser._id, role: (newuser as any).role }, jwtsecret, { expiresIn: '7d' })
+        return { usr: newuser, tkn: token }
     }
     async login(email:string,pass:string){
         const usr = await User.findOne({email})

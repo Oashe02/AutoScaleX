@@ -5,8 +5,8 @@ const auth = new authservice()
 export const register = async (req:any,res:any)=>{
     try {
         const {name,email,phone,password,vehicleNumber} = req.body
-        const user = await auth.register(name,email,phone,password,vehicleNumber)
-        return res.status(201).json({message:"registered",user})
+        const data = await auth.register(name,email,phone,password,vehicleNumber)
+        return res.status(201).json({message:"registered",data})
     } catch (err:any) {
         console.log(err)
         return res.status(500).json({message:err.message})

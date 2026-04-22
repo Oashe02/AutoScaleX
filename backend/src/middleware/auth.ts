@@ -13,7 +13,8 @@ const authmiddleware = (req: any, res: any, next: any) => {
     const decoded = jwt.verify(tkn, secret)
     req.user = decoded
     next()
-  } catch (e) {
+  } catch (e: any) {
+    console.error('JWT Verification Failed:', { message: e.message, secretProvided: !!secret })
     return res.status(401).json({ error: 'invalid token' })
   }
 }

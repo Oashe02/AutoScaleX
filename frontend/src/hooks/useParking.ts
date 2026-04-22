@@ -34,11 +34,20 @@ export const useParking = () => {
       const bkRes = await fetch(`${API}/booking/my`, { headers: h })
       const invRes = await fetch(`${API}/invoice/my`, { headers: h })
       
+      if (bkRes.status === 401 || invRes.status === 401) {
+        console.warn('Auth failed, redirecting...', { bk: bkRes.status, inv: invRes.status })
+        localStorage.removeItem('token')
+        window.location.href = '/landing'
+        return
+      }
+
       const bk = bkRes.ok ? await bkRes.json() : []
       const inv = invRes.ok ? await invRes.json() : []
 
       setData(p => ({ ...p, myBookings: bk, myInvoices: inv }))
-    } catch (e) { console.error(e) }
+    } catch (e) {
+      console.error('Fetch user data failed:', e)
+    }
   }, [loggedIn, authHeaders])
 
   return { data, loading, error, fetchLots, fetchUserData, setData }
