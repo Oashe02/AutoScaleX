@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { DashboardTab } from '../components/DashboardTab'
+import { useEffect } from 'react'
+import DashboardTab from '../components/DashboardTab'
 import { useParking } from '../hooks/useParking'
 import { useAuth } from '../context/AuthContext'
 import { useBooking } from '../hooks/useBooking'
