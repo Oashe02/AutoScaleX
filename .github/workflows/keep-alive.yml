@@ -11,4 +11,4 @@ jobs:
     steps:
       - name: Hit Render backend
         run: |
-          curl -I https://example.onrender.com
+          curl -I https://autoscalex.onrender.com
