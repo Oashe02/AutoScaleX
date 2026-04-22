@@ -12,11 +12,13 @@ export const useBooking = (refreshCallback: () => void) => {
     loading: false,
     paymentOpen: false,
     pendingSlot: null as any,
-    pendingLotName: ''
+    pendingLotName: '',
+    bookingSuccess: false,
+    confirmedSlotNumber: ''
   })
 
   const openLot = useCallback(async (lot: any) => {
-    setState(s => ({ ...s, selectedLot: lot, loading: true }))
+    setState(s => ({ ...s, selectedLot: lot, loading: true, bookingSuccess: false }))
     try {
       const res = await fetch(`${API}/slot/lot/${lot._id}`)
       if (res.ok) {
@@ -44,6 +46,8 @@ export const useBooking = (refreshCallback: () => void) => {
     try {
       const h = authHeaders()
       if (!h) return
+
+      const slotNum = state.pendingSlot.slotnumber
 
       const bRes = await fetch(`${API}/booking`, {
         method: 'POST', headers: h,
@@ -77,12 +81,26 @@ export const useBooking = (refreshCallback: () => void) => {
 
       if (!pRes.ok) throw new Error('Payment processing failed')
 
-      setState(s => ({ ...s, paymentOpen: false, pendingSlot: null }))
+      setState(s => ({ 
+        ...s, 
+        paymentOpen: false, 
+        pendingSlot: null, 
+        bookingSuccess: true,
+        confirmedSlotNumber: slotNum 
+      }))
       refreshCallback()
     } catch (e: any) {
       console.error(e.message || 'Something went wrong')
     }
   }
 
-  return { state, openLot, closeLot, selectSlot, finalize, setPaymentOpen: (v: boolean) => setState(s => ({...s, paymentOpen: v})) }
+  return { 
+    state, 
+    openLot, 
+    closeLot, 
+    selectSlot, 
+    finalize, 
+    setPaymentOpen: (v: boolean) => setState(s => ({...s, paymentOpen: v})),
+    setSuccessOpen: (v: boolean) => setState(s => ({...s, bookingSuccess: v}))
+  }
 }

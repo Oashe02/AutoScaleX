@@ -264,3 +264,37 @@ export const SlotModal = ({ lot, slots, loading, onClose, onBook }: any) => {
     </div>
   )
 }
+
+export const SuccessModal = ({ slotNumber, onClose }: any) => {
+  return (
+    <div className="fixed inset-0 z-[3000] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}>
+      <div 
+        className="bg-white rounded-3xl w-full max-w-sm shadow-2xl overflow-hidden flex flex-col items-center p-8 text-center" 
+        onClick={e => e.stopPropagation()}
+      >
+        <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mb-6">
+          <svg className="w-10 h-10 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path>
+          </svg>
+        </div>
+        
+        <h2 className="text-3xl font-black text-slate-900 tracking-tight mb-2">Booking Confirmed!</h2>
+        <p className="text-slate-500 font-medium mb-8">
+          Your space <span className="text-slate-900 font-bold">{slotNumber}</span> is reserved and ready for you.
+        </p>
+
+        <div className="w-full space-y-3">
+          <button 
+            onClick={onClose}
+            className="w-full py-4 rounded-xl bg-slate-900 text-white font-bold text-sm tracking-wide hover:bg-slate-800 transition-all shadow-lg cursor-pointer"
+          >
+            Got it, Thanks!
+          </button>
+          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+            Ticket details sent to your email
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+}

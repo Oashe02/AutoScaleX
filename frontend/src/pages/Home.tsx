@@ -3,7 +3,7 @@ import DashboardTab from '../components/DashboardTab'
 import { useParking } from '../hooks/useParking'
 import { useAuth } from '../context/AuthContext'
 import { useBooking } from '../hooks/useBooking'
-import { SlotModal } from '../components/slot'
+import { SlotModal, SuccessModal } from '../components/slot'
 import { PaymentInvoice } from '../components/PaymentInvoice'
 
 import { AddFacilityModal } from '../components/AddFacilityModal'
@@ -18,7 +18,7 @@ const Home = () => {
     if (loggedIn) fetchUserData()
   }
 
-  const { state: bState, openLot, closeLot, selectSlot, finalize, setPaymentOpen } = useBooking(refresh)
+  const { state: bState, openLot, closeLot, selectSlot, finalize, setPaymentOpen, setSuccessOpen } = useBooking(refresh)
   const { showAdd, setShowAdd, create } = useFacilities(refresh)
 
   useEffect(() => {
@@ -66,6 +66,13 @@ const Home = () => {
           slotDetails={{...bState.pendingSlot, lotName: bState.pendingLotName}} 
           onClose={() => setPaymentOpen(false)} 
           onPay={finalize} 
+        />
+      )}
+
+      {bState.bookingSuccess && (
+        <SuccessModal 
+          slotNumber={bState.confirmedSlotNumber} 
+          onClose={() => setSuccessOpen(false)} 
         />
       )}
 
